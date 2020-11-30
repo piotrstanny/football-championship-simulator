@@ -19,7 +19,7 @@ public class FootballChampionship {
 //                    method();
                     menuChoice = PremierLeagueManager.menuList();
                     break;
-                case "d":
+                case "R":
                     System.out.println("\nRemove club from Premier League:\n---------------------");
 //                    method();
                     menuChoice = PremierLeagueManager.menuList();
