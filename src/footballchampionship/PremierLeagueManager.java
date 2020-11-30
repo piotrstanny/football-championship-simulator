@@ -2,6 +2,7 @@
 package footballchampionship;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,7 +41,28 @@ public class PremierLeagueManager implements LeagueManager {
         // Add new instance of a FootballClub to the clubs list
         clubsList.add(new FootballClub(name, location));
         // Confirm that added successfully
-        System.out.println(name + " club has been added!");
-        System.out.println("There are now " + getNoOfClubs() + " clubs in the league.");
+        System.out.println("...\n" + name + " club has been added!");
+        displayClubsNoInfo();
+    }
+
+    public void removeClub() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Name of the club to REMOVE: ");
+        String name =  sc.nextLine();
+
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            if (club.getName().equals(name)) {
+                itr.remove();
+                System.out.println("...\n" + name + " removed!");
+            }
+        }
+        displayClubsNoInfo();
+    }
+
+    // Additional methods
+    void displayClubsNoInfo() {
+        System.out.println("There are now " + getNoOfClubs() + " clubs in the Premier League.");
     }
 }
