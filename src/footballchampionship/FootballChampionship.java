@@ -6,8 +6,10 @@ public class FootballChampionship {
     public static void main(String[] args) {
 
         System.out.println("Welcome to the Football Championship Simulator!");
-        // Create League object and use methods inherited from the class
+        // Create League object
         PremierLeagueManager premierLeague = new PremierLeagueManager();
+        //
+        System.out.println(premierLeague.getNoOfClubs());
 
         // Loading main menu:
         String menuChoice = PremierLeagueManager.menuList();
@@ -16,7 +18,8 @@ public class FootballChampionship {
             switch (menuChoice) {
                 case "c":
                     System.out.println("\nCreate new club:\n---------------------");
-//                    method();
+                    premierLeague.createClub();
+                    System.out.println(premierLeague.getNoOfClubs());
                     menuChoice = PremierLeagueManager.menuList();
                     break;
                 case "R":
@@ -46,14 +49,6 @@ public class FootballChampionship {
                     break;
             }
         }
-
-        // Create Football Club
-        FootballClub club1 = new FootballClub("Legia", "Warszawa");
-//        System.out.println("Premier League clubs: " + premierLeague.displayNoOfClubs());
-//        club1.displayStats();
-//        System.out.println(club1);
-
-
         // Closing the program:
         System.out.println("\nYour session has ended. Goodbye!");
     }

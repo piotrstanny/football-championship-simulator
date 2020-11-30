@@ -1,12 +1,20 @@
 
 package footballchampionship;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PremierLeagueManager implements LeagueManager {
 
-    int noOfFootballClubs = 0;
+    List<FootballClub> clubsList = new ArrayList<>();
 
+    // Implementation of method required by interface
+    public int getNoOfClubs() {
+        return clubsList.size();
+    }
+
+    // Menu methods
     public static String menuList() {
         System.out.println(
                 "\nTo continue, choose from the list of menu options:\n"
@@ -23,8 +31,13 @@ public class PremierLeagueManager implements LeagueManager {
         return menuChoice;
     }
 
-    // Add implementation of methods required by interface
-    public int displayNoOfClubs() {
-        return noOfFootballClubs;
+    public void createClub() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Type name of the club: ");
+        String name =  sc.nextLine();
+        System.out.print("Type club's location: ");
+        String location =  sc.nextLine();
+        FootballClub newClub = new FootballClub(name, location);
+        clubsList.add(newClub);
     }
 }
