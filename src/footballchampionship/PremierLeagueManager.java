@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PremierLeagueManager implements LeagueManager {
-
+    // Create empty list of clubs
     List<FootballClub> clubsList = new ArrayList<>();
 
     // Implementation of method required by interface
@@ -37,7 +37,7 @@ public class PremierLeagueManager implements LeagueManager {
         String name =  sc.nextLine();
         System.out.print("Type club's location: ");
         String location =  sc.nextLine();
-        FootballClub newClub = new FootballClub(name, location);
-        clubsList.add(newClub);
+        // Add new instance of a FootballClub to the clubs list
+        clubsList.add(new FootballClub(name, location));
     }
 }
