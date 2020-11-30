@@ -39,5 +39,8 @@ public class PremierLeagueManager implements LeagueManager {
         String location =  sc.nextLine();
         // Add new instance of a FootballClub to the clubs list
         clubsList.add(new FootballClub(name, location));
+        // Confirm that added successfully
+        System.out.println(name + " club has been added!");
+        System.out.println("There are now " + getNoOfClubs() + " clubs in the league.");
     }
 }

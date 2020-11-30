@@ -8,23 +8,21 @@ public class FootballChampionship {
         System.out.println("Welcome to the Football Championship Simulator!");
         // Create League object
         PremierLeagueManager premierLeague = new PremierLeagueManager();
-        //
-        System.out.println(premierLeague.getNoOfClubs());
+        // Current no of clubs in the league
+        System.out.println("There currently are " + premierLeague.getNoOfClubs() + " clubs in the Premier League.");
 
         // Loading main menu:
         String menuChoice = PremierLeagueManager.menuList();
-
         while (!menuChoice.equals("q")) {
             switch (menuChoice) {
                 case "c":
                     System.out.println("\nCreate new club:\n---------------------");
                     premierLeague.createClub();
-                    System.out.println(premierLeague.getNoOfClubs());
                     menuChoice = PremierLeagueManager.menuList();
                     break;
-                case "R":
+                case "r":
                     System.out.println("\nRemove club from Premier League:\n---------------------");
-//                    method();
+                    premierLeague.removeClub();
                     menuChoice = PremierLeagueManager.menuList();
                     break;
                 case "s":
