@@ -1,8 +1,7 @@
 
 package footballchampionship;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -137,6 +136,31 @@ public class PremierLeagueManager implements LeagueManager {
     }
 
     // Additional methods
+    void loadDataFromFile() throws Exception {
+        try {
+            String path = System.getProperty("user.dir");
+            Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "clubs_list.txt")));
+            while (readFile.hasNext()) {
+                String name = readFile.nextLine();
+                String location = readFile.nextLine();
+                FootballClub club = new FootballClub(name, location);
+                club.setMatchesPlayed(Integer.parseInt(readFile.nextLine()));
+                club.setWins(Integer.parseInt(readFile.nextLine()));
+                club.setDraws(Integer.parseInt(readFile.nextLine()));
+                club.setDefeats(Integer.parseInt(readFile.nextLine()));
+                club.setGoalsScored(Integer.parseInt(readFile.nextLine()));
+                club.setGoalsReceived(Integer.parseInt(readFile.nextLine()));
+                club.setPoints(Integer.parseInt(readFile.nextLine()));
+                clubsList.add(club);
+            }
+            readFile.close();
+            System.out.println("... Data has been loaded!\n\n");
+        }
+        catch (FileNotFoundException error) {
+            System.out.println("Exception error:\nNo data to load!\nAdd and save data first, then reopen the simulator.\n");
+        }
+    }
+
     void displayClubsNoInfo() {
         System.out.println("There are now " + getNoOfClubs() + " clubs in the Premier League.");
     }

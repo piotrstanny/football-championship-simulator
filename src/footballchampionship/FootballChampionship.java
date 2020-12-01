@@ -6,8 +6,10 @@ public class FootballChampionship {
     public static void main(String[] args) throws Exception {
 
         System.out.println("Welcome to the Football Championship Simulator!");
-        // Create League object
+        // Create Premier League instance
         PremierLeagueManager premierLeague = new PremierLeagueManager();
+        // Load data from file if exists
+        premierLeague.loadDataFromFile();
         // Current no of clubs in the league
         System.out.println("There currently are " + premierLeague.getNoOfClubs() + " clubs in the Premier League.");
 
