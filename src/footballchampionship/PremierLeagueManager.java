@@ -21,8 +21,8 @@ class PremierLeagueManager implements LeagueManager {
     // Menu methods
     String menuList() {
         System.out.println(
-                "\nTo continue, choose from the list of menu options:\n"
-                        + "---------------------------\n"
+                "\nTo continue, choose option from the menu:\n"
+                        + "--------------------------------\n"
                         + "Q:\t Quit program\n"
                         + "C:\t Create a new club and add to the league\n"
                         + "R:\t Remove club from Premier League\n"
@@ -109,7 +109,7 @@ class PremierLeagueManager implements LeagueManager {
     void addMatch() {
         // Collect data from the user
         Scanner sc = new Scanner(System.in);
-        System.out.print("Type date of the match (dd-mm-yyyy): ");
+        System.out.print("Type date of the match (dd-mm): ");
         String date = sc.nextLine();
         System.out.print("Type name of the club: ");
         String club1 = sc.nextLine();
@@ -121,12 +121,12 @@ class PremierLeagueManager implements LeagueManager {
         int club2Score = Integer.parseInt(sc.nextLine());
 
         // Process input to update clubs statistics
-        Iterator<FootballClub> itr = clubsList.iterator();
-        while (itr.hasNext()) {
-            FootballClub club = itr.next();
-            if (club.getName().equals(club1)) {
-                
-            }
+        if (club1Score == club2Score) {
+            updateClubsDraw(club1, club2, club1Score);
+        } else if (club1Score > club2Score) {
+            updateClubsWinLose(club1, club2, club1Score, club2Score);
+        } else {
+            updateClubsWinLose(club2, club1, club2Score, club1Score);
         }
     }
 
@@ -188,4 +188,53 @@ class PremierLeagueManager implements LeagueManager {
     void displayClubsNoInfo() {
         System.out.println("There are now " + getNoOfClubs() + " clubs in the Premier League.");
     }
-}
+
+    void updateClubsDraw(String club1, String club2, int score) {
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            if (club.getName().equals(club1)) {
+                club.setMatchesPlayed(club.getMatchesPlayed() + 1);
+                club.setDraws(club.getDraws() + 1);
+                club.setPoints(club.getPoints() + 1);
+                club.setGoalsScored(club.getGoalsScored() + score);
+                club.setGoalsReceived(club.getGoalsReceived() + score);
+            }
+        }
+        Iterator<FootballClub> itr2 = clubsList.iterator();
+        while (itr2.hasNext()) {
+            FootballClub club = itr2.next();
+            if (club.getName().equals(club2)) {
+                club.setMatchesPlayed(club.getMatchesPlayed() + 1);
+                club.setDraws(club.getDraws() + 1);
+                club.setPoints(club.getPoints() + 1);
+                club.setGoalsScored(club.getGoalsScored() + score);
+                club.setGoalsReceived(club.getGoalsReceived() + score);
+            }
+        }
+    }
+
+    void updateClubsWinLose(String winner, String loser, int winnerScore, int loserScore) {
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            if (club.getName().equals(winner)) {
+                club.setMatchesPlayed(club.getMatchesPlayed() + 1);
+                club.setWins(club.getWins() + 1);
+                club.setGoalsScored(club.getGoalsScored() + winnerScore);
+                club.setGoalsReceived(club.getGoalsReceived() + loserScore);
+                club.setPoints(club.getPoints() + 3);
+            }
+        }
+        Iterator<FootballClub> itr2 = clubsList.iterator();
+        while (itr2.hasNext()) {
+            FootballClub club = itr2.next();
+            if (club.getName().equals(loser)) {
+                club.setMatchesPlayed(club.getMatchesPlayed() + 1);
+                club.setDefeats(club.getDefeats() + 1);
+                club.setGoalsScored(club.getGoalsScored() + loserScore);
+                club.setGoalsReceived(club.getGoalsReceived() + winnerScore);
+            }
+        }
+    }
+} // End of main method

@@ -11,6 +11,7 @@ public class FootballChampionship {
         // Load data from file if exists
         premierLeague.loadDataFromFile();
         // Current no of clubs in the league
+        System.out.println("The season 2020-21 has begun!");
         System.out.println("There currently are " + premierLeague.getNoOfClubs() + " clubs in the Premier League.");
 
         // Loading main menu:
