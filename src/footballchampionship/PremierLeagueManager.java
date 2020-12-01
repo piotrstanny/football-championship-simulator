@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Scanner;
 
 class PremierLeagueManager implements LeagueManager {
-    // Maximum number of clubs that can belong to English Premier League
+    // Max number of clubs that can belong to English Premier League
     private final int LEAGUE_CAPACITY = 20;
     // Create empty list of clubs
     List<FootballClub> clubsList = new ArrayList<>(LEAGUE_CAPACITY);
+    // Max number of matches that can be played in one season in English Premier League
+    private final int MATCHES_CAPACITY = 38;
+    // Create empty list of matches
+    List<Match> matchesList = new ArrayList<>(MATCHES_CAPACITY);
 
-    // Implementation of method required by interface
+    // Implementation of method required by League Manager interface
     public int getNoOfClubs() {
         return clubsList.size();
     }
@@ -112,22 +116,26 @@ class PremierLeagueManager implements LeagueManager {
         System.out.print("Type date of the match (dd-mm): ");
         String date = sc.nextLine();
         System.out.print("Type name of the club: ");
-        String club1 = sc.nextLine();
+        String club1Name = sc.nextLine();
         System.out.print("Who they played against?: ");
-        String club2 = sc.nextLine();
-        System.out.print("How many goals scored " + club1 + "?: ");
+        String club2Name = sc.nextLine();
+        System.out.print("How many goals scored " + club1Name + "?: ");
         int club1Score = Integer.parseInt(sc.nextLine());
-        System.out.print("How many goals scored " + club2 + "?: ");
+        System.out.print("How many goals scored " + club2Name + "?: ");
         int club2Score = Integer.parseInt(sc.nextLine());
 
         // Process input to update clubs statistics
         if (club1Score == club2Score) {
-            updateClubsDraw(club1, club2, club1Score);
+            updateClubsDraw(club1Name, club2Name, club1Score);
         } else if (club1Score > club2Score) {
-            updateClubsWinLose(club1, club2, club1Score, club2Score);
+            updateClubsWinLose(club1Name, club2Name, club1Score, club2Score);
         } else {
-            updateClubsWinLose(club2, club1, club2Score, club1Score);
+            updateClubsWinLose(club2Name, club1Name, club2Score, club1Score);
         }
+
+        // Add match to the matches list
+
+        matchesList.add(new Match(date, club1Name, club2Name, club1Score, club2Score));
     }
 
     void saveToFile() throws Exception {
