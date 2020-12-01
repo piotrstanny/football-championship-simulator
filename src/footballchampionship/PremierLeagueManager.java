@@ -16,7 +16,7 @@ public class PremierLeagueManager implements LeagueManager {
     }
 
     // Menu methods
-    public static String menuList() {
+    static String menuList() {
         System.out.println(
                 "\nTo continue, choose from the list of menu options:\n"
                         + "---------------------------\n"
@@ -32,7 +32,7 @@ public class PremierLeagueManager implements LeagueManager {
         return menuChoice;
     }
 
-    public void createClub() {
+    void createClub() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Type name of the club: ");
         String name =  sc.nextLine();
@@ -45,7 +45,7 @@ public class PremierLeagueManager implements LeagueManager {
         displayClubsNoInfo();
     }
 
-    public void removeClub() {
+    void removeClub() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Name of the club to REMOVE: ");
         String name =  sc.nextLine();
@@ -59,6 +59,30 @@ public class PremierLeagueManager implements LeagueManager {
             }
         }
         displayClubsNoInfo();
+    }
+
+    void clubStats() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Name of the club: ");
+        String name =  sc.nextLine();
+
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            if (club.getName().equals(name)) {
+                System.out.println(
+                        "...\n" + name + " Club Statistics:\n"
+                        + "---------------------------\n"
+                        + "Wins:\t " + club.getWins() + "\n"
+                        + "Draws:\t " + club.getDraws() + "\n"
+                        + "Defeats:\t " + club.getDefeats() + "\n"
+                        + "Goals scored:\t " + club.getGoalsScored() + "\n"
+                        + "Goals received:\t " + club.getGoalsReceived() + "\n"
+                        + "Matches played:\t " + club.getMatchesPlayed() + "\n"
+                        + "TOTAL POINTS:\t " + club.getPoints() + "\n"
+                );
+            }
+        }
     }
 
     // Additional methods

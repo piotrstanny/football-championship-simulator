@@ -7,8 +7,6 @@ public abstract class SportsClub {
         this.name = name;
         this.location = location;
     }
-    // Set an abstract method
-    public abstract void displayStats();
 
     public String getName() {
         return name;

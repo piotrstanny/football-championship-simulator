@@ -27,7 +27,7 @@ public class FootballChampionship {
                     break;
                 case "s":
                     System.out.println("\nDisplay statistics of a club:\n---------------------");
-//                    method();
+                    premierLeague.clubStats();
                     menuChoice = PremierLeagueManager.menuList();
                     break;
                 case "t":
