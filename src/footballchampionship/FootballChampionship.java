@@ -3,7 +3,7 @@ package footballchampionship;
 
 public class FootballChampionship {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         System.out.println("Welcome to the Football Championship Simulator!");
         // Create League object

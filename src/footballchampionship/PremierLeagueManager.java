@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PremierLeagueManager implements LeagueManager {
+    // Maximum number of clubs that can belong to English Premier League
+    private final int LEAGUE_CAPACITY = 20;
     // Create empty list of clubs
-    List<FootballClub> clubsList = new ArrayList<>();
+    List<FootballClub> clubsList = new ArrayList<>(LEAGUE_CAPACITY);
 
     // Implementation of method required by interface
     public int getNoOfClubs() {
@@ -105,6 +107,34 @@ public class PremierLeagueManager implements LeagueManager {
         }
     }
 
+    void saveToFile() throws Exception {
+        try {
+            File file = new File("." + File.separator + "clubs_list.txt");
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+
+            Iterator<FootballClub> itr = clubsList.iterator();
+            while (itr.hasNext()) {
+                FootballClub club = itr.next();
+                writer.write(
+                        club.getName() + "\n"
+                        + club.getLocation() + "\n"
+                        + club.getMatchesPlayed() + "\n"
+                        + club.getWins() + "\n"
+                        + club.getDraws() + "\n"
+                        + club.getDefeats() + "\n"
+                        + club.getGoalsScored() + "\n"
+                        + club.getGoalsReceived() + "\n"
+                        + club.getPoints() + "\n"
+                        );
+            }
+            writer.close();
+            System.out.println("...\nData has been saved to the file!");
+        }
+        catch (Exception error) {
+            System.out.println("Exception error:\n" + error);
+        }
+    }
 
     // Additional methods
     void displayClubsNoInfo() {
