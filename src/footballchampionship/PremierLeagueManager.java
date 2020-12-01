@@ -1,6 +1,8 @@
 
 package footballchampionship;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,7 +63,7 @@ public class PremierLeagueManager implements LeagueManager {
         displayClubsNoInfo();
     }
 
-    void clubStats() {
+    void displayClubStats() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Name of the club: ");
         String name =  sc.nextLine();
@@ -71,19 +73,38 @@ public class PremierLeagueManager implements LeagueManager {
             FootballClub club = itr.next();
             if (club.getName().equals(name)) {
                 System.out.println(
-                        "...\n" + name + " Club Statistics:\n"
+                        "...\n" + name + " Club from " + club.getLocation() + ":\n"
                         + "---------------------------\n"
+                        + "Matches played:\t " + club.getMatchesPlayed() + "\n"
                         + "Wins:\t " + club.getWins() + "\n"
                         + "Draws:\t " + club.getDraws() + "\n"
                         + "Defeats:\t " + club.getDefeats() + "\n"
                         + "Goals scored:\t " + club.getGoalsScored() + "\n"
                         + "Goals received:\t " + club.getGoalsReceived() + "\n"
-                        + "Matches played:\t " + club.getMatchesPlayed() + "\n"
                         + "TOTAL POINTS:\t " + club.getPoints() + "\n"
                 );
             }
         }
     }
+
+    void displayTable() {
+        System.out.format("                CLUB  |  MP   W   D   L  GS  GR  Pts\n");
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            System.out.format("%20s" + "%7d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d\n",
+                    club.getName(),
+                    club.getMatchesPlayed(),
+                    club.getWins(),
+                    club.getDraws(),
+                    club.getDefeats(),
+                    club.getGoalsScored(),
+                    club.getGoalsReceived(),
+                    club.getPoints()
+                    );
+        }
+    }
+
 
     // Additional methods
     void displayClubsNoInfo() {

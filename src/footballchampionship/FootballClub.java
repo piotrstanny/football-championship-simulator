@@ -1,7 +1,7 @@
 package footballchampionship;
 
 public class FootballClub extends SportsClub {
-    int wins, draws, defeats, goalsReceived, goalsScored, points, matchesPlayed;
+    int wins, draws, defeats, goalsReceived, goalsScored, points, matchesPlayed = 11;
 
     public FootballClub(String name, String location) {
         super(name, location);

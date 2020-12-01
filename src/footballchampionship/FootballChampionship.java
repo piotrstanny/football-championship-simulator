@@ -27,12 +27,12 @@ public class FootballChampionship {
                     break;
                 case "s":
                     System.out.println("\nDisplay statistics of a club:\n---------------------");
-                    premierLeague.clubStats();
+                    premierLeague.displayClubStats();
                     menuChoice = PremierLeagueManager.menuList();
                     break;
                 case "t":
-                    System.out.println("\nDisplay Premier League table:\n---------------------");
-//                    method();
+                    System.out.println("\nDisplay Premier League table:\n---------------------------------------------");
+                    premierLeague.displayTable();
                     menuChoice = PremierLeagueManager.menuList();
                     break;
                 case "a":
@@ -42,7 +42,7 @@ public class FootballChampionship {
                     break;
                 case "f":
                     System.out.println("\nSave data to the file:\n---------------------");
-//                    method();
+                    premierLeague.saveToFile();
                     menuChoice = PremierLeagueManager.menuList();
                     break;
             }
