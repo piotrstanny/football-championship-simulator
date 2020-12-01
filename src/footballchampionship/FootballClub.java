@@ -3,63 +3,63 @@ package footballchampionship;
 public class FootballClub extends SportsClub {
     int matchesPlayed, wins, draws, defeats, goalsScored, goalsReceived, points;
 
-    public FootballClub(String name, String location) {
+    FootballClub(String name, String location) {
         super(name, location);
     }
 
-    public int getWins() {
+    int getWins() {
         return wins;
     }
 
-    public void setWins(int wins) {
+    void setWins(int wins) {
         this.wins = wins;
     }
 
-    public int getDraws() {
+    int getDraws() {
         return draws;
     }
 
-    public void setDraws(int draws) {
+    void setDraws(int draws) {
         this.draws = draws;
     }
 
-    public int getDefeats() {
+    int getDefeats() {
         return defeats;
     }
 
-    public void setDefeats(int defeats) {
+    void setDefeats(int defeats) {
         this.defeats = defeats;
     }
 
-    public int getGoalsReceived() {
+    int getGoalsReceived() {
         return goalsReceived;
     }
 
-    public void setGoalsReceived(int goalsReceived) {
+    void setGoalsReceived(int goalsReceived) {
         this.goalsReceived = goalsReceived;
     }
 
-    public int getGoalsScored() {
+    int getGoalsScored() {
         return goalsScored;
     }
 
-    public void setGoalsScored(int goalsScored) {
+    void setGoalsScored(int goalsScored) {
         this.goalsScored = goalsScored;
     }
 
-    public int getPoints() {
+    int getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    void setPoints(int points) {
         this.points = points;
     }
 
-    public int getMatchesPlayed() {
+    int getMatchesPlayed() {
         return matchesPlayed;
     }
 
-    public void setMatchesPlayed(int matchesPlayed) {
+    void setMatchesPlayed(int matchesPlayed) {
         this.matchesPlayed = matchesPlayed;
     }
 }

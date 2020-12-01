@@ -14,38 +14,38 @@ public class FootballChampionship {
         System.out.println("There currently are " + premierLeague.getNoOfClubs() + " clubs in the Premier League.");
 
         // Loading main menu:
-        String menuChoice = PremierLeagueManager.menuList();
+        String menuChoice = premierLeague.menuList();
         while (!menuChoice.equals("q")) {
             switch (menuChoice) {
                 case "c":
                     System.out.println("\nCreate new club:\n---------------------");
                     premierLeague.createClub();
-                    menuChoice = PremierLeagueManager.menuList();
+                    menuChoice = premierLeague.menuList();
                     break;
                 case "r":
                     System.out.println("\nRemove club from Premier League:\n---------------------");
                     premierLeague.removeClub();
-                    menuChoice = PremierLeagueManager.menuList();
+                    menuChoice = premierLeague.menuList();
                     break;
                 case "s":
                     System.out.println("\nDisplay statistics of a club:\n---------------------");
                     premierLeague.displayClubStats();
-                    menuChoice = PremierLeagueManager.menuList();
+                    menuChoice = premierLeague.menuList();
                     break;
                 case "t":
                     System.out.println("\nDisplay Premier League table:\n---------------------------------------------");
                     premierLeague.displayTable();
-                    menuChoice = PremierLeagueManager.menuList();
+                    menuChoice = premierLeague.menuList();
                     break;
                 case "a":
                     System.out.println("\nAdd a played match:\n---------------------");
-//                    method();
-                    menuChoice = PremierLeagueManager.menuList();
+                    premierLeague.addMatch();
+                    menuChoice = premierLeague.menuList();
                     break;
                 case "f":
                     System.out.println("\nSave data to the file:\n---------------------");
                     premierLeague.saveToFile();
-                    menuChoice = PremierLeagueManager.menuList();
+                    menuChoice = premierLeague.menuList();
                     break;
             }
         }

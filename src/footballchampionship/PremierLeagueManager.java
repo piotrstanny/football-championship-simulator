@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class PremierLeagueManager implements LeagueManager {
+class PremierLeagueManager implements LeagueManager {
     // Maximum number of clubs that can belong to English Premier League
     private final int LEAGUE_CAPACITY = 20;
     // Create empty list of clubs
@@ -19,7 +19,7 @@ public class PremierLeagueManager implements LeagueManager {
     }
 
     // Menu methods
-    static String menuList() {
+    String menuList() {
         System.out.println(
                 "\nTo continue, choose from the list of menu options:\n"
                         + "---------------------------\n"
@@ -77,9 +77,9 @@ public class PremierLeagueManager implements LeagueManager {
                         "...\n" + name + " Club from " + club.getLocation() + ":\n"
                         + "---------------------------\n"
                         + "Matches played:\t " + club.getMatchesPlayed() + "\n"
-                        + "Wins:\t " + club.getWins() + "\n"
-                        + "Draws:\t " + club.getDraws() + "\n"
-                        + "Defeats:\t " + club.getDefeats() + "\n"
+                        + "Wins:\t\t\t " + club.getWins() + "\n"
+                        + "Draws:\t\t\t " + club.getDraws() + "\n"
+                        + "Defeats:\t\t " + club.getDefeats() + "\n"
                         + "Goals scored:\t " + club.getGoalsScored() + "\n"
                         + "Goals received:\t " + club.getGoalsReceived() + "\n"
                         + "TOTAL POINTS:\t " + club.getPoints() + "\n"
@@ -106,6 +106,30 @@ public class PremierLeagueManager implements LeagueManager {
         }
     }
 
+    void addMatch() {
+        // Collect data from the user
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Type date of the match (dd-mm-yyyy): ");
+        String date = sc.nextLine();
+        System.out.print("Type name of the club: ");
+        String club1 = sc.nextLine();
+        System.out.print("Who they played against?: ");
+        String club2 = sc.nextLine();
+        System.out.print("How many goals scored " + club1 + "?: ");
+        int club1Score = Integer.parseInt(sc.nextLine());
+        System.out.print("How many goals scored " + club2 + "?: ");
+        int club2Score = Integer.parseInt(sc.nextLine());
+
+        // Process input to update clubs statistics
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            if (club.getName().equals(club1)) {
+                
+            }
+        }
+    }
+
     void saveToFile() throws Exception {
         try {
             File file = new File("." + File.separator + "clubs_list.txt");
@@ -128,7 +152,7 @@ public class PremierLeagueManager implements LeagueManager {
                         );
             }
             writer.close();
-            System.out.println("...\nData has been saved to the file!");
+            System.out.println("...\nData has been saved!");
         }
         catch (Exception error) {
             System.out.println("Exception error:\n" + error);
@@ -154,7 +178,7 @@ public class PremierLeagueManager implements LeagueManager {
                 clubsList.add(club);
             }
             readFile.close();
-            System.out.println("... Data has been loaded!\n\n");
+            System.out.println("... Data has been loaded!\n");
         }
         catch (FileNotFoundException error) {
             System.out.println("Exception error:\nNo data to load!\nAdd and save data first, then reopen the simulator.\n");

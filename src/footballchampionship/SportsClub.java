@@ -3,24 +3,24 @@ package footballchampionship;
 public abstract class SportsClub {
     private String name, location;
 
-    public SportsClub(String name, String location) {
+    SportsClub(String name, String location) {
         this.name = name;
         this.location = location;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getLocation() {
+    String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    void setLocation(String location) {
         this.location = location;
     }
 }
