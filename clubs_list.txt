@@ -1,0 +1,36 @@
+Leicester City
+Leicester
+14
+5
+4
+9
+7
+6
+53
+Chelsea
+London
+8
+3
+4
+1
+18
+13
+53
+Arsenal
+London
+19
+3
+1
+11
+17
+29
+69
+Manchester United
+Old Trafford
+16
+7
+3
+3
+17
+22
+72
