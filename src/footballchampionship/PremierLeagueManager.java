@@ -102,11 +102,12 @@ class PremierLeagueManager implements LeagueManager {
 
             for (int j = i+1; j < clubsList.size(); j++) {
                 FootballClub next = clubsList.get(j);
+
                 if (bestClub.getPoints() == next.getPoints()) {
-                    if (bestClub.getGoalsScored() < next.getGoalsScored()) {
+                    // Resolve same points with goal difference
+                    if (bestClub.getGoalsScored() - bestClub.getGoalsReceived() < next.getGoalsScored() - next.getGoalsReceived()) {
                         bestClub = next;
                         index = j;
-                        break;
                     }
                 }
                 if (bestClub.getPoints() < next.getPoints()) {
@@ -120,7 +121,7 @@ class PremierLeagueManager implements LeagueManager {
             displayRow(sorted);
             // After the last iteration, display the last element
             if (i == clubsList.size() - 2) {
-                displayRow(firstUnsorted);
+                displayRow(clubsList.get(i + 1));
             }
         }
 
