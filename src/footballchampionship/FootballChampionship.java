@@ -28,8 +28,8 @@ public class FootballChampionship {
                     premierLeague.removeClub();
                     menuChoice = premierLeague.menuList();
                     break;
-                case "s":
-                    System.out.println("\nDisplay statistics of a club:\n---------------------");
+                case "d":
+                    System.out.println("\nDisplay details & stats of a club:\n---------------------");
                     premierLeague.displayClubStats();
                     menuChoice = premierLeague.menuList();
                     break;
@@ -43,11 +43,17 @@ public class FootballChampionship {
                     premierLeague.addMatch();
                     menuChoice = premierLeague.menuList();
                     break;
-                case "f":
+                case "s":
                     System.out.println("\nSave data to the file:\n---------------------");
                     premierLeague.saveToFile();
                     menuChoice = premierLeague.menuList();
                     break;
+                case "g":
+                    System.out.println("\nLaunch Graphical User Interface:\n---------------------");
+                    premierLeague.startGui();
+                    menuChoice = premierLeague.menuList();
+                    break;
+
             }
         }
         // Closing the program:

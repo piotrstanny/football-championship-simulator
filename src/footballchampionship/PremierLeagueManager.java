@@ -30,10 +30,11 @@ class PremierLeagueManager implements LeagueManager {
                         + "Q:\t Quit program\n"
                         + "C:\t Create a new club and add to the league\n"
                         + "R:\t Remove club from Premier League\n"
-                        + "S:\t Display statistics of a club\n"
+                        + "S:\t Display details & stats of a club\n"
                         + "T:\t Display Premier League Table\n"
                         + "A:\t Add a match score\n"
-                        + "F:\t Save data in to file");
+                        + "S:\t Save data in to file\n"
+                        + "G:\t Launch Graphical User Interface\n");
         Scanner sc = new Scanner(System.in);
         String menuChoice = sc.nextLine().toLowerCase();
         return menuChoice;
@@ -182,6 +183,12 @@ class PremierLeagueManager implements LeagueManager {
         catch (Exception error) {
             System.out.println("Exception error:\n" + error);
         }
+    }
+
+    void startGui() {
+        System.out.println("...\nProgram starting in a new window...");
+        new GUI();
+
     }
 
     // Additional methods
