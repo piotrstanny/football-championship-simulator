@@ -119,6 +119,7 @@ class PremierLeagueManager implements LeagueManager {
             }
             FootballClub sorted = bestClub;
             clubsList.set(index, firstUnsorted);
+            clubsList.set(i,sorted);
             // Print out club with highest points directly
             displayRow(sorted);
             // After the last iteration, display the last element
