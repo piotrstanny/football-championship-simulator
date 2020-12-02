@@ -26,7 +26,7 @@ class PremierLeagueManager implements LeagueManager {
     String menuList() {
         System.out.println(
                 "\nTo continue, choose option from the menu:\n"
-                        + "--------------------------------\n"
+                        + "---------------------------------------\n"
                         + "Q:\t Quit program\n"
                         + "C:\t Create a new club and add to the league\n"
                         + "R:\t Remove club from Premier League\n"
@@ -94,20 +94,36 @@ class PremierLeagueManager implements LeagueManager {
 
     void displayTable() {
         System.out.format("                CLUB  |  MP   W   D   L  GS  GR  Pts\n");
-        Iterator<FootballClub> itr = clubsList.iterator();
-        while (itr.hasNext()) {
-            FootballClub club = itr.next();
-            System.out.format("%20s" + "%7d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d\n",
-                    club.getName(),
-                    club.getMatchesPlayed(),
-                    club.getWins(),
-                    club.getDraws(),
-                    club.getDefeats(),
-                    club.getGoalsScored(),
-                    club.getGoalsReceived(),
-                    club.getPoints()
-                    );
+        // Selection Sort to display clubs row in the right order
+        for (int i = 0; i < clubsList.size() - 1; i++) {
+            FootballClub firstUnsorted = clubsList.get(i);
+            FootballClub bestClub = firstUnsorted;
+            int index = i;
+
+            for (int j = i+1; j < clubsList.size(); j++) {
+                FootballClub next = clubsList.get(j);
+                if (bestClub.getPoints() == next.getPoints()) {
+                    if (bestClub.getGoalsScored() < next.getGoalsScored()) {
+                        bestClub = next;
+                        index = j;
+                        break;
+                    }
+                }
+                if (bestClub.getPoints() < next.getPoints()) {
+                    bestClub = next;
+                    index = j;
+                }
+            }
+            FootballClub sorted = bestClub;
+            clubsList.set(index, firstUnsorted);
+            // Print out club with highest points directly
+            displayRow(sorted);
+            // After the last iteration, display the last element
+            if (i == clubsList.size() - 2) {
+                displayRow(firstUnsorted);
+            }
         }
+
     }
 
     void addMatch() {
@@ -244,5 +260,18 @@ class PremierLeagueManager implements LeagueManager {
                 club.setGoalsReceived(club.getGoalsReceived() + winnerScore);
             }
         }
+    }
+
+    void displayRow(FootballClub club) {
+            System.out.format("%20s" + "%7d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d\n",
+            club.getName(),
+            club.getMatchesPlayed(),
+            club.getWins(),
+            club.getDraws(),
+            club.getDefeats(),
+            club.getGoalsScored(),
+            club.getGoalsReceived(),
+            club.getPoints()
+            );
     }
 } // End of main method

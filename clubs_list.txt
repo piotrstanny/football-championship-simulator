@@ -1,3 +1,12 @@
+Leicester City
+Leicester
+14
+5
+4
+9
+16
+26
+53
 Chelsea
 London
 8
@@ -9,28 +18,19 @@ London
 53
 Arsenal
 London
-12
-6
+19
 3
-9
+1
+11
 17
-26
+29
 69
 Manchester United
 Old Trafford
-12
-6
+16
+7
 3
-9
+3
 17
-26
+22
 72
-Leicester City
-Leicester
-12
-6
-3
-9
-17
-26
-58
