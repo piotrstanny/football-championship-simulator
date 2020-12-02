@@ -1,6 +1,7 @@
 
 package footballchampionship;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -187,8 +188,11 @@ class PremierLeagueManager implements LeagueManager {
 
     void startGui() {
         System.out.println("...\nProgram starting in a new window...");
-        new GUI();
-
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new GUI(clubsList);
+            }
+        });
     }
 
     // Additional methods

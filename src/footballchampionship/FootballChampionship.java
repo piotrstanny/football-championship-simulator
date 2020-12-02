@@ -53,7 +53,6 @@ public class FootballChampionship {
                     premierLeague.startGui();
                     menuChoice = premierLeague.menuList();
                     break;
-
             }
         }
         // Closing the program:
