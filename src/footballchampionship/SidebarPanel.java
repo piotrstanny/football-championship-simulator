@@ -1,11 +1,14 @@
 package footballchampionship;
 
 import javax.swing.*;
+import javax.swing.event.EventListenerList;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SidebarPanel extends JPanel {
+
+    private EventListenerList listenerList = new EventListenerList();
 
     SidebarPanel() {
         Dimension size = getPreferredSize();
@@ -20,7 +23,9 @@ public class SidebarPanel extends JPanel {
         btnPoints.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String action = "RankingByPoints";
                 System.out.println("sort by total points");
+                fireSidebarEvent(new SidebarEvent(this, action));
             }
         });
 
@@ -44,6 +49,23 @@ public class SidebarPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 3;
         add(btnWins, gbc);
+    }
 
+    public void fireSidebarEvent(SidebarEvent event) {
+        Object[] listeners = listenerList.getListenerList();
+
+        for (int i = listeners.length-2; i>=0; i-=2) {
+            if (listeners[i]==SidebarListener.class) {
+                ((SidebarListener)listeners[i+1]).sidebarEventOccurred(event);
+            }
+        }
+    }
+
+    public void addSidebarListener(SidebarListener listener) {
+        listenerList.add(SidebarListener.class, listener);
+    }
+
+    public void removeSidebarListener(SidebarListener listener) {
+        listenerList.remove(SidebarListener.class, listener);
     }
 }

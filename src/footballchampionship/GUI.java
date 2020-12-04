@@ -11,18 +11,23 @@ public class GUI {
         JFrame frame = new JFrame ("Football Championship Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        Container c = frame.getContentPane();
         SidebarPanel sidebar = new SidebarPanel();
         sidebar.addSidebarListener(new SidebarListener() {
-            public void sidebarEventOccurred(sidebarEvent event);
+            public void sidebarEventOccurred(SidebarEvent event) {
+                // action to execute depending on event received
+                String action = event.getAction();
+                if (action.equals("RankingByPoints")) {
+                    c.add(new tableTemplate(clubsList), BorderLayout.EAST);
+                }
+            }
         });
 
         frame.setSize(900,500);
         frame.setVisible(true);
 
         // Adding components to  Content Pane
-        Container c = frame.getContentPane();
         c.add(sidebar, BorderLayout.WEST);
-        c.add(new tableTemplate(clubsList), BorderLayout.EAST);
     }
 
     // Methods for displaying content
