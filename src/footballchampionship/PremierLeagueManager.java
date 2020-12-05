@@ -2,6 +2,7 @@
 package footballchampionship;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -189,8 +190,13 @@ class PremierLeagueManager implements LeagueManager {
 
     void startGui() {
         System.out.println("...\nProgram starting in a new window...");
-        SwingUtilities.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                    ex.printStackTrace();
+                }
                 JFrame gui = new GUI(clubsList, "Football Championship Simulator");
                 gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 gui.setSize(900,500);

@@ -2,9 +2,12 @@ package footballchampionship;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GUI extends JFrame {
@@ -27,6 +30,7 @@ public class GUI extends JFrame {
         // Table Set Up
         JTable table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
+        table.getColumnModel().getColumn(0).setPreferredWidth(150);
         getContentPane().add(new JScrollPane(table));
 
         // Navbar Set Up
@@ -34,14 +38,37 @@ public class GUI extends JFrame {
         getContentPane().add(navBar, BorderLayout.SOUTH);
 
 
+        // Access clubs data and load to the table
+        for (int i = 0; i < clubsList.size(); i++) {
+            String clubName = (clubsList.get(i)).getName();
+            int matchesPlayed = (clubsList.get(i)).getMatchesPlayed();
+            int wins = (clubsList.get(i)).getWins();
+            int draws = (clubsList.get(i)).getDraws();
+            int defeats = (clubsList.get(i)).getDefeats();
+            int goalsScored = (clubsList.get(i)).getGoalsScored();
+            int goalsReceived = (clubsList.get(i)).getGoalsReceived();
+            int points = (clubsList.get(i)).getPoints();
 
-        // Add components
-//        c.add(sidebar, BorderLayout.SOUTH);
-        //        c.add(new tableTemplate(clubsList), BorderLayout.EAST);
+            Object[] data = {
+                    clubName,
+                    matchesPlayed,
+                    wins,
+                    draws,
+                    defeats,
+                    goalsScored,
+                    goalsReceived,
+                    points
+            };
+            tableModel.addRow(data);
+        }
 
+        // Sort
+        TableRowSorter<TableModel> tableSorter = new TableRowSorter<TableModel>(table.getModel());
+        table.setRowSorter(tableSorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>(clubsList.size());
+        sortKeys.add(new RowSorter.SortKey(7, SortOrder.DESCENDING));
+        tableSorter.setSortKeys(sortKeys);
     }
-
-    // Methods for displaying content
 }
 
 class NavBar extends JPanel {
