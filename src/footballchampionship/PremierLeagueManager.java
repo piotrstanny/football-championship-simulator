@@ -191,7 +191,10 @@ class PremierLeagueManager implements LeagueManager {
         System.out.println("...\nProgram starting in a new window...");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI(clubsList);
+                JFrame gui = new GUI(clubsList, "Football Championship Simulator");
+                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                gui.setSize(900,500);
+                gui.setVisible(true);
             }
         });
     }

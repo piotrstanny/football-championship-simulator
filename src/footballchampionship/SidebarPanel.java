@@ -12,7 +12,7 @@ public class SidebarPanel extends JPanel {
 
     SidebarPanel() {
         Dimension size = getPreferredSize();
-        size.width = 300;
+        size.height = 200;
         setPreferredSize(size);
 
         setBorder(BorderFactory.createTitledBorder("Premier League Details"));
@@ -21,10 +21,10 @@ public class SidebarPanel extends JPanel {
 
         JButton btnPoints = new JButton("Total Points");
         btnPoints.addActionListener(new ActionListener() {
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 String action = "RankingByPoints";
-                System.out.println("sort by total points");
+                System.out.println("action was fired");
                 fireSidebarEvent(new SidebarEvent(this, action));
             }
         });
@@ -47,6 +47,19 @@ public class SidebarPanel extends JPanel {
         gbc.gridy = 2;
         add(btnGoals, gbc);
         gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(btnWins, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        add(leagueLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        add(btnPoints, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        add(btnGoals, gbc);
+        gbc.gridx = 1;
         gbc.gridy = 3;
         add(btnWins, gbc);
     }

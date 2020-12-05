@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.List;
 
 // Class for building a table
-class tableTemplate extends JPanel {
+class tableTemplate extends JTable {
 
     tableTemplate(List<FootballClub> clubsList) {
 
