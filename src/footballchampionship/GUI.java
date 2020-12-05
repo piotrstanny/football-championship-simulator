@@ -24,6 +24,7 @@ public class GUI extends JFrame {
     };
     DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
+    /////// CONSTRUCTOR STARTS HERE ///////
     public GUI(List<FootballClub> clubsList, String title){
         super(title);
 
@@ -31,12 +32,6 @@ public class GUI extends JFrame {
         JTable table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
         table.getColumnModel().getColumn(0).setPreferredWidth(150);
-        getContentPane().add(new JScrollPane(table));
-
-        // Navbar Set Up
-        JPanel navBar = new NavBar();
-        getContentPane().add(navBar, BorderLayout.SOUTH);
-
 
         // Access clubs data and load to the table
         for (int i = 0; i < clubsList.size(); i++) {
@@ -62,13 +57,63 @@ public class GUI extends JFrame {
             tableModel.addRow(data);
         }
 
-        // Sort
+
+        // Navbar buttons
+        JLabel leagueLabel = new JLabel("Display League table by:");
+        JButton btnPoints = new JButton("Total Points");
+        btnPoints.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("action was fired");
+                int columnIndex = 7;
+                // Sort table
+                sortTable(columnIndex, clubsList, table);
+            }
+        });
+        JButton btnExit = new JButton("Exit Program");
+        btnExit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        JButton btnGoals = new JButton("Goals Scored");
+        JButton btnWins = new JButton("Number of Wins");
+
+
+        // Layout Set Up
+        getContentPane().add(new JScrollPane(table));
+        JPanel navBar = new NavBar();
+        getContentPane().add(navBar, BorderLayout.SOUTH);
+
+
+        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.anchor = GridBagConstraints.PAGE_START;
+//        gbc.insets = new Insets(20,10,10,10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        navBar.add(leagueLabel, gbc);
+        gbc.weightx = 0.5;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        navBar.add(btnPoints, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        navBar.add(btnGoals, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        navBar.add(btnWins, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        navBar.add(btnExit, gbc);
+    }
+
+    void sortTable(int columnIndex, List<FootballClub> clubsList, JTable table) {
         TableRowSorter<TableModel> tableSorter = new TableRowSorter<TableModel>(table.getModel());
         table.setRowSorter(tableSorter);
         List<RowSorter.SortKey> sortKeys = new ArrayList<>(clubsList.size());
-        sortKeys.add(new RowSorter.SortKey(7, SortOrder.DESCENDING));
+        sortKeys.add(new RowSorter.SortKey(columnIndex, SortOrder.DESCENDING));
         tableSorter.setSortKeys(sortKeys);
     }
+
 }
 
 class NavBar extends JPanel {
@@ -78,43 +123,7 @@ class NavBar extends JPanel {
         size.height = 200;
         setPreferredSize(size);
         setBorder(BorderFactory.createTitledBorder("Premier League Details"));
-
-        JLabel leagueLabel = new JLabel("Display League table by:");
-
-        JButton btnPoints = new JButton("Total Points");
-        btnPoints.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("action was fired");
-            }
-        });
-
-        JButton btnExit = new JButton("Exit Program");
-        btnExit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        JButton btnGoals = new JButton("Goals Scored");
-        JButton btnWins = new JButton("Number of Wins");
         setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(leagueLabel, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        add(btnPoints, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(btnGoals, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(btnWins, gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        add(btnExit, gbc);
     }
 }
 
