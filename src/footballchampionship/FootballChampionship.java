@@ -38,7 +38,7 @@ public class FootballChampionship {
                     premierLeague.displayTable();
                     menuChoice = premierLeague.menuList();
                     break;
-                case "a":
+                case "m":
                     System.out.println("\nAdd a played match:\n---------------------");
                     premierLeague.addMatch();
                     menuChoice = premierLeague.menuList();

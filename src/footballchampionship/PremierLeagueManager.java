@@ -32,9 +32,9 @@ class PremierLeagueManager implements LeagueManager {
                         + "Q:\t Quit program\n"
                         + "C:\t Create a new club and add to the league\n"
                         + "R:\t Remove club from Premier League\n"
-                        + "D:\t Display details & stats of a club\n"
-                        + "T:\t Display Premier League Table\n"
-                        + "A:\t Add a match score\n"
+                        + "D:\t Details & stats of a club\n"
+                        + "T:\t Table of the Premier League\n"
+                        + "M:\t Add a match score\n"
                         + "S:\t Save data in to file\n"
                         + "G:\t Launch Graphical User Interface\n");
         Scanner sc = new Scanner(System.in);
@@ -215,12 +215,12 @@ class PremierLeagueManager implements LeagueManager {
         System.out.println("...\nProgram starting in a new window...");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                    ex.printStackTrace();
-                }
-                JFrame gui = new GUI(clubsList, "Football Championship Simulator");
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                    ex.printStackTrace();
+//                }
+                JFrame gui = new GUI(clubsList, matchesList, "Football Championship Simulator");
                 gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 gui.setSize(900,500);
                 gui.setVisible(true);

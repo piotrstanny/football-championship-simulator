@@ -18,13 +18,13 @@ London
 72
 Aston Villa
 Birmingham
-21
-7
-8
-6
 22
-19
-62
+7
+9
+6
+24
+21
+63
 Tottenham Hotspur
 London
 16
@@ -36,13 +36,13 @@ London
 61
 Chelsea
 London
-13
+14
 3
-4
+5
 2
-19
-16
-53
+21
+18
+54
 Leicester City
 Leicester
 17

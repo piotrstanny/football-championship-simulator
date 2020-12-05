@@ -12,57 +12,15 @@ import java.util.List;
 
 public class GUI extends JFrame {
 
-    String[] columnNames = {
-            "Club Name",
-            "Matches played",
-            "Wins",
-            "Draws",
-            "Losses",
-            "Goals Scored",
-            "Goals Received",
-            "TOTAL POINTS"
-    };
-    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            if (columnIndex == 0) return Integer.class;
-            return super.getColumnClass(columnIndex);
-        }
-    };
-
-    /////// CONSTRUCTOR STARTS HERE ///////
-    public GUI(List<FootballClub> clubsList, String title){
+    public GUI(List<FootballClub> clubsList, List<Match> matchesList, String title){
         super(title);
 
-        // Table Set Up
-        JTable table = new JTable(tableModel);
-        table.setFillsViewportHeight(true);
-        table.getColumnModel().getColumn(0).setPreferredWidth(150);
-
-        // Access clubs data and load to the table
-        for (int i = 0; i < clubsList.size(); i++) {
-            String clubName = (clubsList.get(i)).getName();
-            int matchesPlayed = (clubsList.get(i)).getMatchesPlayed();
-            int wins = (clubsList.get(i)).getWins();
-            int draws = (clubsList.get(i)).getDraws();
-            int defeats = (clubsList.get(i)).getDefeats();
-            int goalsScored = (clubsList.get(i)).getGoalsScored();
-            int goalsReceived = (clubsList.get(i)).getGoalsReceived();
-            int points = (clubsList.get(i)).getPoints();
-
-            Object[] data = {
-                    clubName,
-                    matchesPlayed,
-                    wins,
-                    draws,
-                    defeats,
-                    goalsScored,
-                    goalsReceived,
-                    points
-            };
-            tableModel.addRow(data);
-        }
-
+        // Layout Set Up
+        JTable table = loadClubsTable(clubsList);
+        JScrollPane tableScroll = new JScrollPane(table);
+        getContentPane().add(tableScroll);
+        JPanel navBar = new NavBar();
+        getContentPane().add(navBar, BorderLayout.SOUTH);
 
         // Navbar buttons
         JLabel leagueLabel = new JLabel("Display League table by:");
@@ -96,12 +54,20 @@ public class GUI extends JFrame {
                 System.exit(0);
             }
         });
-
-        // Layout Set Up
-        getContentPane().add(new JScrollPane(table));
-        JPanel navBar = new NavBar();
-        getContentPane().add(navBar, BorderLayout.SOUTH);
-
+        JButton btnMatches = new JButton("Display all matches played");
+        btnMatches.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("action was fired");
+                // Remove current and create new table
+                getContentPane().remove(tableScroll);
+                JTable table = loadMatchesTable(matchesList);
+                JScrollPane tableScroll = new JScrollPane(table);
+                getContentPane().add(tableScroll);
+                // Refresh GUI
+                getContentPane().repaint();
+                getContentPane().revalidate();
+            }
+        });
 
         GridBagConstraints gbc = new GridBagConstraints();
 //        gbc.anchor = GridBagConstraints.PAGE_START;
@@ -121,7 +87,71 @@ public class GUI extends JFrame {
         navBar.add(btnWins, gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
+        navBar.add(btnMatches, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         navBar.add(btnExit, gbc);
+    }
+
+    JTable loadClubsTable(List<FootballClub> clubsList) {
+        String[] clubsListColumns = {
+                "Club Name",
+                "Matches played",
+                "Wins",
+                "Draws",
+                "Losses",
+                "Goals Scored",
+                "Goals Received",
+                "TOTAL POINTS"
+        };
+
+        DefaultTableModel tableModel = new DefaultTableModel(clubsListColumns, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) return Integer.class;
+                return super.getColumnClass(columnIndex);
+            }
+        };
+
+        JTable table = new JTable(tableModel);
+        table.setFillsViewportHeight(true);
+        table.getColumnModel().getColumn(0).setPreferredWidth(180);
+        populateClubsList(clubsList, tableModel);
+        return table;
+    }
+
+    JTable loadMatchesTable(List<Match> matchesList) {
+        String[] matchesColumns = {"Club 1","Score","Date", "Score", "Club 2"};
+        DefaultTableModel tableModel = new DefaultTableModel(matchesColumns, 0);
+        JTable table = new JTable(tableModel);
+        table.setFillsViewportHeight(true);
+        for (int i=0;i< matchesList.size();i++) {
+            String date = matchesList.get(i).getDate();
+            String club1Name = matchesList.get(i).getClub1Name();
+            String club2Name = matchesList.get(i).getClub2Name();
+            int club1Score = matchesList.get(i).getClub1Score();
+            int club2Score = matchesList.get(i).getClub2Score();
+            Object[] data = {club1Name, club1Score, date, club2Score, club2Name};
+            tableModel.addRow(data);
+        }
+        return table;
+    }
+
+    void populateClubsList(List<FootballClub> clubsList, DefaultTableModel tableModel) {
+        // Access clubs data and load to the table
+        for (int i = 0; i < clubsList.size(); i++) {
+            String clubName = (clubsList.get(i)).getName();
+            int matchesPlayed = (clubsList.get(i)).getMatchesPlayed();
+            int wins = (clubsList.get(i)).getWins();
+            int draws = (clubsList.get(i)).getDraws();
+            int defeats = (clubsList.get(i)).getDefeats();
+            int goalsScored = (clubsList.get(i)).getGoalsScored();
+            int goalsReceived = (clubsList.get(i)).getGoalsReceived();
+            int points = (clubsList.get(i)).getPoints();
+
+            Object[] data = {clubName, matchesPlayed, wins, draws, defeats, goalsScored, goalsReceived, points};
+            tableModel.addRow(data);
+        }
     }
 
     void sortTable(int columnIndex, List<FootballClub> clubsList, JTable table) {
@@ -131,7 +161,6 @@ public class GUI extends JFrame {
         sortKeys.add(new RowSorter.SortKey(columnIndex, SortOrder.DESCENDING));
         tableSorter.setSortKeys(sortKeys);
     }
-
 }
 
 class NavBar extends JPanel {
