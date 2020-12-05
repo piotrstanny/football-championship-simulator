@@ -24,10 +24,13 @@ public class GUI extends JFrame {
 
         // Navbar buttons
         JLabel leagueLabel = new JLabel("Display League table by:");
+        JLabel matchLabel = new JLabel("Display matches played:");
+
         JButton btnPoints = new JButton("Total Points");
         btnPoints.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("action was fired");
+                // Sort table
                 int columnIndex = 7;
                 sortTable(columnIndex, clubsList, table);
             }
@@ -54,7 +57,7 @@ public class GUI extends JFrame {
                 System.exit(0);
             }
         });
-        JButton btnMatches = new JButton("Display all matches played");
+        JButton btnMatches = new JButton("Display all");
         btnMatches.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("action was fired");
@@ -69,28 +72,31 @@ public class GUI extends JFrame {
             }
         });
 
+        //Buttons layout
         GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.anchor = GridBagConstraints.PAGE_START;
 //        gbc.insets = new Insets(20,10,10,10);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        navBar.add(leagueLabel, gbc);
-        gbc.weightx = 0.5;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        navBar.add(btnPoints, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        navBar.add(btnGoals, gbc);
+        gbc.weightx = 0.6;
         gbc.gridx = 0;
         gbc.gridy = 3;
-        navBar.add(btnWins, gbc);
+        navBar.add(btnExit, gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        navBar.add(btnMatches, gbc);
+        navBar.add(leagueLabel, gbc);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        navBar.add(btnExit, gbc);
+        navBar.add(btnPoints, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        navBar.add(btnGoals, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        navBar.add(btnWins, gbc);
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        navBar.add(matchLabel, gbc);
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        navBar.add(btnMatches, gbc);
     }
 
     JTable loadClubsTable(List<FootballClub> clubsList) {
