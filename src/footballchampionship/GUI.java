@@ -22,7 +22,13 @@ public class GUI extends JFrame {
             "Goals Received",
             "TOTAL POINTS"
     };
-    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            if (columnIndex == 0) return Integer.class;
+            return super.getColumnClass(columnIndex);
+        }
+    };
 
     /////// CONSTRUCTOR STARTS HERE ///////
     public GUI(List<FootballClub> clubsList, String title){
@@ -65,7 +71,22 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("action was fired");
                 int columnIndex = 7;
-                // Sort table
+                sortTable(columnIndex, clubsList, table);
+            }
+        });
+        JButton btnGoals = new JButton("Goals Scored");
+        btnGoals.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("action was fired");
+                int columnIndex = 5;
+                sortTable(columnIndex, clubsList, table);
+            }
+        });
+        JButton btnWins = new JButton("Number of Wins");
+        btnWins.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("action was fired");
+                int columnIndex = 2;
                 sortTable(columnIndex, clubsList, table);
             }
         });
@@ -75,9 +96,6 @@ public class GUI extends JFrame {
                 System.exit(0);
             }
         });
-        JButton btnGoals = new JButton("Goals Scored");
-        JButton btnWins = new JButton("Number of Wins");
-
 
         // Layout Set Up
         getContentPane().add(new JScrollPane(table));

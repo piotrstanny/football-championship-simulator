@@ -32,7 +32,7 @@ class PremierLeagueManager implements LeagueManager {
                         + "Q:\t Quit program\n"
                         + "C:\t Create a new club and add to the league\n"
                         + "R:\t Remove club from Premier League\n"
-                        + "S:\t Display details & stats of a club\n"
+                        + "D:\t Display details & stats of a club\n"
                         + "T:\t Display Premier League Table\n"
                         + "A:\t Add a match score\n"
                         + "S:\t Save data in to file\n"
@@ -155,11 +155,11 @@ class PremierLeagueManager implements LeagueManager {
         }
 
         // Add match to the matches list
-
         matchesList.add(new Match(date, club1Name, club2Name, club1Score, club2Score));
     }
 
     void saveToFile() throws Exception {
+        // Saving list of clubs
         try {
             File file = new File("." + File.separator + "clubs_list.txt");
             file.createNewFile();
@@ -181,7 +181,30 @@ class PremierLeagueManager implements LeagueManager {
                         );
             }
             writer.close();
-            System.out.println("...\nData has been saved!");
+            System.out.println("...\nClubs list has been saved!");
+        }
+        catch (Exception error) {
+            System.out.println("Exception error:\n" + error);
+        }
+        // Saving list of played matches
+        try {
+            File file = new File("." + File.separator + "played_matches.txt");
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+
+            Iterator<Match> itr = matchesList.iterator();
+            while (itr.hasNext()) {
+                Match match = itr.next();
+                writer.write(
+                        match.getDate() + "\n"
+                            + match.getClub1Name() + "\n"
+                            + match.getClub2Name() + "\n"
+                            + match.getClub1Score() + "\n"
+                            + match.getClub2Score() + "\n"
+                );
+            }
+            writer.close();
+            System.out.println("...\nMatches data has been saved!");
         }
         catch (Exception error) {
             System.out.println("Exception error:\n" + error);
@@ -208,6 +231,7 @@ class PremierLeagueManager implements LeagueManager {
     // Additional methods
     void loadDataFromFile() throws Exception {
         try {
+            // Load clubs list
             String path = System.getProperty("user.dir");
             Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "clubs_list.txt")));
             while (readFile.hasNext()) {
@@ -222,6 +246,30 @@ class PremierLeagueManager implements LeagueManager {
                 club.setGoalsReceived(Integer.parseInt(readFile.nextLine()));
                 club.setPoints(Integer.parseInt(readFile.nextLine()));
                 clubsList.add(club);
+            }
+            readFile.close();
+            System.out.println("... Data has been loaded!\n");
+        }
+        catch (FileNotFoundException error) {
+            System.out.println("Exception error:\nNo data to load!\nAdd and save data first, then reopen the simulator.\n");
+        }
+        // Load matches list
+        try {
+            String path = System.getProperty("user.dir");
+            Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "played_matches.txt")));
+            while (readFile.hasNext()) {
+                String date = readFile.nextLine();
+                String club1Name = readFile.nextLine();
+                String club2Name = readFile.nextLine();
+                int club1Score = Integer.parseInt(readFile.nextLine());
+                int club2Score = Integer.parseInt(readFile.nextLine());
+                Match match = new Match(date, club1Name, club2Name, club1Score, club2Score);
+                match.setDate(date);
+                match.setClub1Name(club1Name);
+                match.setClub2Name(club2Name);
+                match.setClub1Score(club1Score);
+                match.setClub2Score(club2Score);
+                matchesList.add(match);
             }
             readFile.close();
             System.out.println("... Data has been loaded!\n");
