@@ -5,7 +5,7 @@ public class FootballChampionship {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println("Welcome to the Football Championship Simulator!");
+        System.out.println("Welcome to the Football Championship Simulator!\n");
         // Create Premier League instance
         PremierLeagueManager premierLeague = new PremierLeagueManager();
         // Load data from file if exists

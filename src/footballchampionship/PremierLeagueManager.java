@@ -66,9 +66,15 @@ class PremierLeagueManager implements LeagueManager {
 
     void removeClub() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Name of the club to REMOVE: ");
+        // Display current clubs
+        displayClubsNames(clubsList);
+        System.out.print("Which club to REMOVE: ");
         String name =  sc.nextLine();
-
+        // Validate input
+        while (clubNotInLeague(name)) {
+            System.out.print("Wrong club name!\nTry again: ");
+            name = sc.nextLine();
+        }
         Iterator<FootballClub> itr = clubsList.iterator();
         while (itr.hasNext()) {
             FootballClub club = itr.next();
@@ -258,7 +264,7 @@ class PremierLeagueManager implements LeagueManager {
                 clubsList.add(club);
             }
             readFile.close();
-            System.out.println("... Data has been loaded!\n");
+            System.out.println("... Clubs has been loaded!");
         }
         catch (FileNotFoundException error) {
             System.out.println("Exception error:\nNo data to load!\nAdd and save data first, then reopen the simulator.\n");
@@ -282,18 +288,18 @@ class PremierLeagueManager implements LeagueManager {
                 matchesList.add(match);
             }
             readFile.close();
-            System.out.println("... Data has been loaded!\n");
+            System.out.println("... Matches history has been loaded!\n");
         }
         catch (FileNotFoundException error) {
             System.out.println("Exception error:\nNo data to load!\nAdd and save data first, then reopen the simulator.\n");
         }
     }
 
-    void displayClubsNoInfo() {
+    private void displayClubsNoInfo() {
         System.out.println("There are now " + getNoOfClubs() + " clubs in the Premier League.");
     }
 
-    void updateClubsDraw(String club1, String club2, int score) {
+    private void updateClubsDraw(String club1, String club2, int score) {
         Iterator<FootballClub> itr = clubsList.iterator();
         while (itr.hasNext()) {
             FootballClub club = itr.next();
@@ -318,7 +324,7 @@ class PremierLeagueManager implements LeagueManager {
         }
     }
 
-    void updateClubsWinLose(String winner, String loser, int winnerScore, int loserScore) {
+    private void updateClubsWinLose(String winner, String loser, int winnerScore, int loserScore) {
         Iterator<FootballClub> itr = clubsList.iterator();
         while (itr.hasNext()) {
             FootballClub club = itr.next();
@@ -342,7 +348,7 @@ class PremierLeagueManager implements LeagueManager {
         }
     }
 
-    void displayRow(FootballClub club) {
+    private void displayRow(FootballClub club) {
             System.out.format("%20s" + "%7d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d" + "%4d\n",
             club.getName(),
             club.getMatchesPlayed(),
@@ -355,9 +361,20 @@ class PremierLeagueManager implements LeagueManager {
             );
     }
 
+    private void displayClubsNames(List<FootballClub> clubsList) {
+        System.out.println("Current clubs list:");
+        clubsList.forEach(club -> {
+            if (clubsList.indexOf(club) < clubsList.size()-1) {
+                System.out.print(club.getName() + ", ");
+            } else {
+                System.out.println(club.getName());
+            }
+        });
+    }
+
 
     // Validation methods
-    private static boolean nameValidationFailed(String name) {
+    private boolean nameValidationFailed(String name) {
         if (name.equals("")) {
             System.out.print("Name cannot be empty!\nTry again: ");
             return true;
@@ -369,7 +386,18 @@ class PremierLeagueManager implements LeagueManager {
         return false;
     }
 
-    static boolean isInteger(String name) {
+    private boolean clubNotInLeague(String name) {
+        Iterator<FootballClub> itr = clubsList.iterator();
+        while (itr.hasNext()) {
+            FootballClub club = itr.next();
+            if (club.getName().equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isInteger(String name) {
         try {
             int integer = Integer.parseInt(name);
             return true;
