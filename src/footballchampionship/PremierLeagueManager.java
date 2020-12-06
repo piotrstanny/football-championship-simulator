@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.*;
 
 class PremierLeagueManager implements LeagueManager {
     // Max number of clubs that can belong to English Premier League
@@ -75,6 +76,7 @@ class PremierLeagueManager implements LeagueManager {
             System.out.print("Wrong club name!\nTry again: ");
             name = sc.nextLine();
         }
+        // Remove club
         Iterator<FootballClub> itr = clubsList.iterator();
         while (itr.hasNext()) {
             FootballClub club = itr.next();
@@ -88,9 +90,16 @@ class PremierLeagueManager implements LeagueManager {
 
     void displayClubStats() {
         Scanner sc = new Scanner(System.in);
+        // Display current clubs
+        displayClubsNames(clubsList);
         System.out.print("Name of the club: ");
         String name =  sc.nextLine();
-
+        // Validate input
+        while (clubNotInLeague(name)) {
+            System.out.print("Wrong club name!\nTry again: ");
+            name = sc.nextLine();
+        }
+        // Display club info
         Iterator<FootballClub> itr = clubsList.iterator();
         while (itr.hasNext()) {
             FootballClub club = itr.next();
@@ -147,19 +156,44 @@ class PremierLeagueManager implements LeagueManager {
     }
 
     void addMatch() {
-        // Collect data from the user
         Scanner sc = new Scanner(System.in);
         System.out.print("Type date of the match (dd-mm): ");
         String date = sc.nextLine();
+        while (wrongDateFormat(date)) {
+            System.out.print("Wrong date format!\nTry again: ");
+            date = sc.nextLine();
+        }
+        // Display current clubs
+        displayClubsNames(clubsList);
+        // Take and validate input for clubs names
         System.out.print("Type name of the club: ");
         String club1Name = sc.nextLine();
+        while (clubNotInLeague(club1Name)) {
+            System.out.print("Wrong club name!\nTry again: ");
+            club1Name = sc.nextLine();
+        }
         System.out.print("Who they played against?: ");
         String club2Name = sc.nextLine();
+        while (clubNotInLeague(club2Name)) {
+            System.out.print("Wrong club name!\nTry again: ");
+            club2Name = sc.nextLine();
+        }
         System.out.print("How many goals scored " + club1Name + "?: ");
-        int club1Score = Integer.parseInt(sc.nextLine());
+        // First score validation
+        String club1ScoreAsString = sc.nextLine();
+        while (isNotNumberInRange(club1ScoreAsString)) {
+            System.out.print("Did you type a natural number? (0-99)\nTry again: ");
+            club1ScoreAsString = sc.nextLine();
+        }
+        int club1Score = Integer.parseInt(club1ScoreAsString);
         System.out.print("How many goals scored " + club2Name + "?: ");
-        int club2Score = Integer.parseInt(sc.nextLine());
-
+        // Second score validation
+        String club2ScoreAsString = sc.nextLine();
+        while (isNotNumberInRange(club2ScoreAsString)) {
+            System.out.print("Did you type a natural number? (0-99)\nTry again: ");
+            club2ScoreAsString = sc.nextLine();
+        }
+        int club2Score = Integer.parseInt(club2ScoreAsString);
         // Process input to update clubs statistics
         if (club1Score == club2Score) {
             updateClubsDraw(club1Name, club2Name, club1Score);
@@ -168,9 +202,9 @@ class PremierLeagueManager implements LeagueManager {
         } else {
             updateClubsWinLose(club2Name, club1Name, club2Score, club1Score);
         }
-
         // Add match to the matches list
         matchesList.add(new Match(date, club1Name, club2Name, club1Score, club2Score));
+        System.out.println("... Adding\n" + club1Name + "\t" + club1Score + "\t" + "["+date+"]" + "\t" + club2Score + "\t" + club2Name + "\nThe match has been added!");
     }
 
     void saveToFile() throws Exception {
@@ -397,6 +431,18 @@ class PremierLeagueManager implements LeagueManager {
         return true;
     }
 
+    private boolean isNotNumberInRange(String numberAsString) {
+        try {
+            int number = Integer.parseInt(numberAsString);
+            if (number >= 0 && number < 100) {
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException error) {
+            return true;
+        }
+    }
+
     private boolean isInteger(String name) {
         try {
             int integer = Integer.parseInt(name);
@@ -405,5 +451,12 @@ class PremierLeagueManager implements LeagueManager {
         catch(NumberFormatException error) {
             return false;
         }
+    }
+
+    private boolean wrongDateFormat(String date) {
+        if (Pattern.matches("[0-3][0-9]-[0-1][0-9]", date)) {
+            return false;
+        }
+        return true;
     }
 } // End of main method
