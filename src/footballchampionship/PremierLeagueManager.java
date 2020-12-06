@@ -24,6 +24,7 @@ class PremierLeagueManager implements LeagueManager {
         return clubsList.size();
     }
 
+
     // Menu methods
     String menuList() {
         System.out.println(
@@ -46,8 +47,16 @@ class PremierLeagueManager implements LeagueManager {
         Scanner sc = new Scanner(System.in);
         System.out.print("Type name of the club: ");
         String name =  sc.nextLine();
+        // Validate input
+        while (nameValidationFailed(name)) {
+            name = sc.nextLine();
+        }
         System.out.print("Type club's location: ");
         String location =  sc.nextLine();
+        // Validate second input
+        while (nameValidationFailed(location)) {
+            location = sc.nextLine();
+        }
         // Add new instance of a FootballClub to the clubs list
         clubsList.add(new FootballClub(name, location));
         // Confirm that added successfully
@@ -228,6 +237,7 @@ class PremierLeagueManager implements LeagueManager {
         });
     }
 
+
     // Additional methods
     void loadDataFromFile() throws Exception {
         try {
@@ -343,5 +353,29 @@ class PremierLeagueManager implements LeagueManager {
             club.getGoalsReceived(),
             club.getPoints()
             );
+    }
+
+
+    // Validation methods
+    private static boolean nameValidationFailed(String name) {
+        if (name.equals("")) {
+            System.out.print("Name cannot be empty!\nTry again: ");
+            return true;
+        }
+        if (isInteger(name)) {
+            System.out.print("Name cannot be a number!\nTry again: ");
+            return true;
+        }
+        return false;
+    }
+
+    static boolean isInteger(String name) {
+        try {
+            int integer = Integer.parseInt(name);
+            return true;
+        }
+        catch(NumberFormatException error) {
+            return false;
+        }
     }
 } // End of main method
