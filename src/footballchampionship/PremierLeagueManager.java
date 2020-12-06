@@ -1,6 +1,8 @@
 
 package footballchampionship;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,10 +32,11 @@ class PremierLeagueManager implements LeagueManager {
                         + "Q:\t Quit program\n"
                         + "C:\t Create a new club and add to the league\n"
                         + "R:\t Remove club from Premier League\n"
-                        + "S:\t Display statistics of a club\n"
-                        + "T:\t Display Premier League Table\n"
-                        + "A:\t Add a match score\n"
-                        + "F:\t Save data in to file");
+                        + "D:\t Details & stats of a club\n"
+                        + "T:\t Table of the Premier League\n"
+                        + "M:\t Add a match score\n"
+                        + "S:\t Save data in to file\n"
+                        + "G:\t Launch Graphical User Interface\n");
         Scanner sc = new Scanner(System.in);
         String menuChoice = sc.nextLine().toLowerCase();
         return menuChoice;
@@ -117,6 +120,7 @@ class PremierLeagueManager implements LeagueManager {
             }
             FootballClub sorted = bestClub;
             clubsList.set(index, firstUnsorted);
+            clubsList.set(i,sorted);
             // Print out club with highest points directly
             displayRow(sorted);
             // After the last iteration, display the last element
@@ -151,11 +155,11 @@ class PremierLeagueManager implements LeagueManager {
         }
 
         // Add match to the matches list
-
         matchesList.add(new Match(date, club1Name, club2Name, club1Score, club2Score));
     }
 
     void saveToFile() throws Exception {
+        // Saving list of clubs
         try {
             File file = new File("." + File.separator + "clubs_list.txt");
             file.createNewFile();
@@ -177,16 +181,57 @@ class PremierLeagueManager implements LeagueManager {
                         );
             }
             writer.close();
-            System.out.println("...\nData has been saved!");
+            System.out.println("...\nClubs list has been saved!");
+        }
+        catch (Exception error) {
+            System.out.println("Exception error:\n" + error);
+        }
+        // Saving list of played matches
+        try {
+            File file = new File("." + File.separator + "played_matches.txt");
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+
+            Iterator<Match> itr = matchesList.iterator();
+            while (itr.hasNext()) {
+                Match match = itr.next();
+                writer.write(
+                        match.getDate() + "\n"
+                            + match.getClub1Name() + "\n"
+                            + match.getClub2Name() + "\n"
+                            + match.getClub1Score() + "\n"
+                            + match.getClub2Score() + "\n"
+                );
+            }
+            writer.close();
+            System.out.println("...\nMatches data has been saved!");
         }
         catch (Exception error) {
             System.out.println("Exception error:\n" + error);
         }
     }
 
+    void startGui() {
+        System.out.println("...\nProgram starting in a new window...");
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                    ex.printStackTrace();
+//                }
+                JFrame gui = new GUI(clubsList, matchesList, "Football Championship Simulator");
+                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                gui.setSize(900,500);
+                gui.setVisible(true);
+            }
+        });
+    }
+
     // Additional methods
     void loadDataFromFile() throws Exception {
         try {
+            // Load clubs list
             String path = System.getProperty("user.dir");
             Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "clubs_list.txt")));
             while (readFile.hasNext()) {
@@ -201,6 +246,30 @@ class PremierLeagueManager implements LeagueManager {
                 club.setGoalsReceived(Integer.parseInt(readFile.nextLine()));
                 club.setPoints(Integer.parseInt(readFile.nextLine()));
                 clubsList.add(club);
+            }
+            readFile.close();
+            System.out.println("... Data has been loaded!\n");
+        }
+        catch (FileNotFoundException error) {
+            System.out.println("Exception error:\nNo data to load!\nAdd and save data first, then reopen the simulator.\n");
+        }
+        // Load matches list
+        try {
+            String path = System.getProperty("user.dir");
+            Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "played_matches.txt")));
+            while (readFile.hasNext()) {
+                String date = readFile.nextLine();
+                String club1Name = readFile.nextLine();
+                String club2Name = readFile.nextLine();
+                int club1Score = Integer.parseInt(readFile.nextLine());
+                int club2Score = Integer.parseInt(readFile.nextLine());
+                Match match = new Match(date, club1Name, club2Name, club1Score, club2Score);
+                match.setDate(date);
+                match.setClub1Name(club1Name);
+                match.setClub2Name(club2Name);
+                match.setClub1Score(club1Score);
+                match.setClub2Score(club2Score);
+                matchesList.add(match);
             }
             readFile.close();
             System.out.println("... Data has been loaded!\n");

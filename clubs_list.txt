@@ -1,30 +1,3 @@
-Leicester City
-Leicester
-14
-5
-4
-9
-7
-6
-53
-Chelsea
-London
-8
-3
-4
-1
-18
-13
-53
-Arsenal
-London
-19
-3
-1
-11
-17
-29
-69
 Manchester United
 Old Trafford
 16
@@ -34,3 +7,48 @@ Old Trafford
 17
 22
 72
+Arsenal
+London
+20
+4
+1
+9
+20
+30
+72
+Aston Villa
+Birmingham
+22
+7
+9
+6
+24
+21
+63
+Tottenham Hotspur
+London
+16
+9
+3
+4
+27
+14
+61
+Chelsea
+London
+14
+3
+5
+2
+21
+18
+54
+Leicester City
+Leicester
+17
+8
+4
+9
+13
+23
+53
