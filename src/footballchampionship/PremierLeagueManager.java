@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.*;
+import java.util.stream.Collectors;
 
 class PremierLeagueManager implements LeagueManager {
     // Max number of clubs that can belong to English Premier League
@@ -121,14 +122,15 @@ class PremierLeagueManager implements LeagueManager {
 
     void displayTable() {
         System.out.format("                CLUB  |  MP   W   D   L  GS  GR  Pts\n");
+        List<FootballClub> clubsCopy = clubsList.stream().collect(Collectors.toList());
         // Selection Sort to display clubs row in the right order
-        for (int i = 0; i < clubsList.size() - 1; i++) {
-            FootballClub firstUnsorted = clubsList.get(i);
+        for (int i = 0; i < clubsCopy.size() - 1; i++) {
+            FootballClub firstUnsorted = clubsCopy.get(i);
             FootballClub bestClub = firstUnsorted;
             int index = i;
 
-            for (int j = i+1; j < clubsList.size(); j++) {
-                FootballClub next = clubsList.get(j);
+            for (int j = i+1; j < clubsCopy.size(); j++) {
+                FootballClub next = clubsCopy.get(j);
 
                 if (bestClub.getPoints() == next.getPoints()) {
                     // Resolve same points with goal difference
@@ -143,13 +145,13 @@ class PremierLeagueManager implements LeagueManager {
                 }
             }
             FootballClub sorted = bestClub;
-            clubsList.set(index, firstUnsorted);
-            clubsList.set(i,sorted);
+            clubsCopy.set(index, firstUnsorted);
+            clubsCopy.set(i,sorted);
             // Print out club with highest points directly
             displayRow(sorted);
             // After the last iteration, display the last element
-            if (i == clubsList.size() - 2) {
-                displayRow(clubsList.get(i + 1));
+            if (i == clubsCopy.size() - 2) {
+                displayRow(clubsCopy.get(i + 1));
             }
         }
 
