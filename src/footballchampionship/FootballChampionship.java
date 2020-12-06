@@ -53,6 +53,9 @@ public class FootballChampionship {
                     premierLeague.startGui();
                     menuChoice = premierLeague.menuList();
                     break;
+                default:
+                    System.out.println("\nInvalid input!");
+                    premierLeague.menuList();
             }
         }
         // Closing the program:
