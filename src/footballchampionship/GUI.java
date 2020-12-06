@@ -30,7 +30,6 @@ public class GUI extends JFrame {
         btnPoints.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("action was fired");
-                // Sort table
                 int columnIndex = 7;
                 sortTable(columnIndex, clubsList, table);
             }
